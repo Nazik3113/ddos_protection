@@ -1,0 +1,11 @@
+FROM alpine:3.19.0
+
+RUN apk update && \
+    apk upgrade && \
+    apk add hping3 --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+COPY ./udp_flood.sh /udp_flood.sh
+
+RUN chmod +x /udp_flood.sh
+
+CMD ["sh", "/udp_flood.sh"]

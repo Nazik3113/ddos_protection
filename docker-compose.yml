@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  slowloris_ddos:
+    container_name: hsa1017-slowloris-ddos
+    build:
+      context: ./ddos
+      dockerfile: Dockerfile.slowloris
+    networks:
+      hsa1017:
+        ipv4_address: 20.79.0.8
+
+  syn_ddos:
+    container_name: hsa1017-syn-ddos
+    build:
+      context: ./ddos
+      dockerfile: Dockerfile.syn
+    networks:
+      hsa1017:
+        ipv4_address: 20.79.0.7
+
+  http_ddos:
+    container_name: hsa1017-http-ddos
+    build:
+      context: ./ddos
+      dockerfile: Dockerfile.http
+    networks:
+      hsa1017:
+        ipv4_address: 20.79.0.6
+ 
+  icmp_ddos:
+    container_name: hsa1017-icmp-ddos
+    build:
+      context: ./ddos
+      dockerfile: Dockerfile.icmp
+    networks:
+      hsa1017:
+        ipv4_address: 20.79.0.5
+
+  udp_ddos:
+    container_name: hsa1017-udp-ddos
+    build:
+      context: ./ddos
+      dockerfile: Dockerfile.udp
+    networks:
+      hsa1017:
+        ipv4_address: 20.79.0.4
+
+  node:
+    container_name: hsa1017-node
+    build: 
+      context: ./src
+      dockerfile: Dockerfile
+    networks:
+      hsa1017: 
+        ipv4_address: 20.79.0.3
+
+  nginx: 
+    container_name: hsa1017-nginx
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "6969:80"
+    networks:
+      hsa1017: 
+        ipv4_address: 20.79.0.2
+    privileged: true
+
+networks:
+  hsa1017:
+    name: hsa1017
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 20.79.0.0/16

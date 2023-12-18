@@ -1,0 +1,11 @@
+FROM alpine:3.19.0
+
+RUN apk update && \
+    apk upgrade && \
+    apk add hping3 --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+COPY ./icmp_flood.sh /icmp_flood.sh
+
+RUN chmod +x /icmp_flood.sh
+
+CMD ["sh", "/icmp_flood.sh"]
