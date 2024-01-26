@@ -1,4 +1,4 @@
-# DDOS protestion System + Nginx.
+# DDOS protection System + Nginx.
 
 To start application run the simple command:
 
